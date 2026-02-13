@@ -17,15 +17,32 @@ import DailyCardDetail from './pages/App/DailyCardDetail';
 import KnowledgeList from './pages/App/Knowledge';
 import RecipeList from './pages/App/Recipes';
 import ExerciseList from './pages/App/Exercises';
+import Settings from './pages/App/Settings';
+import ForgotPassword from './pages/App/ForgotPassword';
+import ChangePassword from './pages/App/ChangePassword';
 
-const Navbar: React.FC<{ user: User | null }> = ({ user }) => {
+const Navbar: React.FC<{ user: User | null; onLogout: () => void }> = ({ user, onLogout }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isApp = location.pathname.startsWith('/app');
-  
+  const navLink = (to: string, label: string) => {
+    const active = location.pathname === to;
+    return (
+      <Link to={to} className={`font-medium transition-colors ${active ? 'text-teal-600 dark:text-teal-400' : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'}`}>
+        {label}
+      </Link>
+    );
+  };
+
+  const handleLogout = () => {
+    onLogout();
+    navigate(isApp ? '/app/login' : '/');
+  };
+
   return (
-    <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-stone-200">
+    <nav className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-md sticky top-0 z-40 border-b border-stone-200 dark:border-stone-700">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-stone-800 tracking-tight italic">FLO<span className="text-teal-600 not-italic">8</span></Link>
+        <Link to="/" className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight italic">FLO<span className="text-teal-600 dark:text-teal-400 not-italic">8</span></Link>
         
         <div className="hidden md:flex items-center gap-8">
           {!isApp ? (
@@ -36,18 +53,30 @@ const Navbar: React.FC<{ user: User | null }> = ({ user }) => {
             </>
           ) : (
             <>
-              <Link to="/app" className={`font-medium transition-colors ${location.pathname === '/app' ? 'text-teal-600' : 'text-stone-600 hover:text-stone-900'}`}>Dashboard</Link>
-              <Link to="/app/chat" className={`font-medium transition-colors ${location.pathname === '/app/chat' ? 'text-teal-600' : 'text-stone-600 hover:text-stone-900'}`}>Coach</Link>
-              <Link to="/app/kennis" className={`font-medium transition-colors ${location.pathname === '/app/kennis' ? 'text-teal-600' : 'text-stone-600 hover:text-stone-900'}`}>Kennis</Link>
+              {navLink('/app', 'Dashboard')}
+              {navLink('/app/chat', 'Coach')}
+              {navLink('/app/recepten', 'Recepten')}
+              {navLink('/app/oefeningen', 'Oefeningen')}
+              {navLink('/app/kennis', 'Kennis')}
+              {navLink('/app/instellingen', 'Instellingen')}
             </>
           )}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {user ? (
-            <Link to="/app" className="bg-stone-800 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-stone-700">Mijn FLO8</Link>
+            <>
+              <Link to="/app" className="bg-stone-800 dark:bg-stone-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-stone-700 dark:hover:bg-stone-600">Mijn FLO8</Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm font-medium"
+              >
+                Uitloggen
+              </button>
+            </>
           ) : (
-            <Link to="/app/login" className="text-stone-600 hover:text-stone-900 font-medium">Inloggen</Link>
+            <Link to="/app/login" className="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-700">Inloggen</Link>
           )}
         </div>
       </div>
@@ -76,6 +105,11 @@ const App: React.FC = () => {
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    const theme = user?.theme ?? 'light';
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [user?.theme]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
@@ -87,8 +121,8 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-stone-50">
-          <Navbar user={user} />
+        <div className="min-h-screen flex flex-col bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100">
+          <Navbar user={user} onLogout={() => setUser(null)} />
           <main className="flex-grow">
             <Routes>
               {/* Landing at / */}
@@ -129,6 +163,17 @@ const App: React.FC = () => {
                     <DailyCardDetail user={user!} />
                   </ProtectedRoute>
                 } />
+                <Route path="instellingen" element={
+                  <ProtectedRoute user={user}>
+                    <Settings user={user!} onUserUpdate={setUser} />
+                  </ProtectedRoute>
+                } />
+                <Route path="wachtwoord-wijzigen" element={
+                  <ProtectedRoute user={user}>
+                    <ChangePassword />
+                  </ProtectedRoute>
+                } />
+                <Route path="wachtwoord-vergeten" element={<ForgotPassword />} />
                 <Route path="*" element={
                   <ProtectedRoute user={user}>
                     <div className="p-20 text-center">Coming Soon</div>

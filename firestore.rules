@@ -1,53 +1,49 @@
-
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Helper functies
     function isSignedIn() {
       return request.auth != null;
     }
-    function isOwner(userId) {
-      return request.auth.uid == userId;
+    function isOwner(uid) {
+      return request.auth.uid == uid;
     }
 
-    // Gebruikersprofielen: Alleen de eigenaar kan lezen/schrijven
-    match /users/{userId} {
-      allow read, write: if isSignedIn() && isOwner(userId);
+    // ─── Users: alleen eigen profiel ─────────────────────────────────────
+    match /users/{uid} {
+      allow read, write: if isSignedIn() && isOwner(uid);
+
+      // Subcollection: card completions (dagelijkse kaarten)
+      match /cardCompletions/{completionId} {
+        allow read, write: if isSignedIn() && isOwner(uid);
+      }
+      // Subcollection: chatberichten
+      match /chatMessages/{messageId} {
+        allow read, write: if isSignedIn() && isOwner(uid);
+      }
     }
 
-    // Content: Iedereen (ingelogd) kan lezen, niemand kan schrijven (behalve admin via dashboard)
-    match /cards/{cardId} {
-      allow read: if isSignedIn();
-      allow write: if false; // Admin only
-    }
-    match /knowledge/{itemId} {
-      allow read: if isSignedIn();
-      allow write: if false; 
-    }
-    match /recipes/{recipeId} {
-      allow read: if isSignedIn();
-      allow write: if false;
-    }
-    match /exercises/{exerciseId} {
-      allow read: if isSignedIn();
-      allow write: if false;
-    }
-
-    // Progressie & Interactie: Alleen de eigenaar
-    match /cardCompletions/{id} {
-      allow read, write: if isSignedIn() && request.resource.data.uid == request.auth.uid;
-    }
-    match /favorites/{userId}/recipes/{recipeId} {
-      allow read, write: if isSignedIn() && isOwner(userId);
-    }
-    match /chats/{userId}/messages/{msgId} {
-      allow read, write: if isSignedIn() && isOwner(userId);
-    }
-
-    // Leads (contactformulier): Iedereen kan schrijven
+    // ─── Leads: iedereen mag aanmaken, alleen admin leest (via backend) ───
     match /leads/{leadId} {
       allow create: if true;
-      allow read: if false;
+      allow read, update, delete: if false;
+    }
+
+    // ─── Content: alle ingelogde users lezen; schrijven alleen via admin ───
+    match /content/dailyCards/{cardId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+    match /content/knowledge/{itemId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+    match /content/recipes/{recipeId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+    match /content/exercises/{exerciseId} {
+      allow read: if isSignedIn();
+      allow write: if false;
     }
   }
 }

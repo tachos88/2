@@ -1,5 +1,5 @@
 
-# FLO8 - MVP Development Guide
+# FLO8 - MVP Development Guides
 
 Dit project is gebouwd als een productieklare MVP met een strikte scheiding tussen de marketing website en de PWA applicatie.
 

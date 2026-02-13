@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { UserRepository } from '../../repositories/UserRepository';
 import { User } from '../../types';
 
@@ -80,7 +80,7 @@ const AppLogin: React.FC<Props> = ({ onLogin }) => {
         </form>
 
         <div className="mt-8 pt-8 border-t border-stone-100 text-center">
-          <p className="text-stone-500 text-sm">Nog geen account? <a href="#/prijzen" className="text-teal-600 font-bold">Bekijk programma's</a></p>
+          <p className="text-stone-500 text-sm">Nog geen account? <Link to="/prijzen" className="text-teal-600 font-bold">Bekijk programma's</Link></p>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { User, DailyCard } from '../../types';
 import { ContentRepository } from '../../repositories/ContentRepository';
-import { OnboardingWizard } from '../../components/OnboardingWizard';
+import { OnboardingWizard } from '../../components/features/onboarding';
 import { UserRepository } from '../../repositories/UserRepository';
 import { Link } from 'react-router-dom';
 

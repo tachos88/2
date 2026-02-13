@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { AppError } from '../services/errorService';
+import { AppError } from '../../services/errorService';
 
 export const Toast: React.FC = () => {
   const [error, setError] = useState<AppError | null>(null);

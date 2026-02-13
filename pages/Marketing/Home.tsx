@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MarketingChat } from '../../components/MarketingChat';
+import { MarketingChat } from '../../components/features/marketing';
 
 const MarketingHome: React.FC = () => {
   return (

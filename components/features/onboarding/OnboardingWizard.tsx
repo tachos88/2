@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { User, UserBaseline } from '../types';
+import { User, UserBaseline } from '../../../types';
 
 interface Props {
   user: User;

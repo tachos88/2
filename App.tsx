@@ -1,15 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { Toast } from './components/Toast';
+import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
+import { ErrorBoundary, Toast } from './components/ui';
 import { User } from './types';
 import { UserRepository } from './repositories/UserRepository';
 
 // Pages
-import MarketingHome from './pages/Marketing/Home';
+import Landing from './pages/Landing';
 import PricingPage from './pages/Marketing/Pricing';
 import ContactPage from './pages/Marketing/Contact';
+import AppLayout from './pages/App/AppLayout';
 import AppDashboard from './pages/App/Dashboard';
 import AppLogin from './pages/App/Login';
 import ChatPage from './pages/App/Chat';
@@ -86,58 +86,60 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <HashRouter>
+      <BrowserRouter>
         <div className="min-h-screen flex flex-col bg-stone-50">
           <Navbar user={user} />
           <main className="flex-grow">
             <Routes>
-              {/* Marketing */}
-              <Route path="/" element={<MarketingHome />} />
+              {/* Landing at / */}
+              <Route path="/" element={<Landing />} />
               <Route path="/prijzen" element={<PricingPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              
-              {/* App */}
-              <Route path="/app/login" element={<AppLogin onLogin={setUser} />} />
-              <Route path="/app" element={
-                <ProtectedRoute user={user}>
-                  <AppDashboard user={user!} />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/chat" element={
-                <ProtectedRoute user={user}>
-                  <ChatPage />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/kennis" element={
-                <ProtectedRoute user={user}>
-                  <KnowledgeList />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/recepten" element={
-                <ProtectedRoute user={user}>
-                  <RecipeList />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/oefeningen" element={
-                <ProtectedRoute user={user}>
-                  <ExerciseList />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/card/:id" element={
-                <ProtectedRoute user={user}>
-                  <DailyCardDetail user={user!} />
-                </ProtectedRoute>
-              } />
-              <Route path="/app/*" element={
-                <ProtectedRoute user={user}>
-                  <div className="p-20 text-center">Coming Soon</div>
-                </ProtectedRoute>
-              } />
+
+              {/* App at /app */}
+              <Route path="/app" element={<AppLayout />}>
+                <Route index element={
+                  <ProtectedRoute user={user}>
+                    <AppDashboard user={user!} />
+                  </ProtectedRoute>
+                } />
+                <Route path="login" element={<AppLogin onLogin={setUser} />} />
+                <Route path="chat" element={
+                  <ProtectedRoute user={user}>
+                    <ChatPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="kennis" element={
+                  <ProtectedRoute user={user}>
+                    <KnowledgeList />
+                  </ProtectedRoute>
+                } />
+                <Route path="recepten" element={
+                  <ProtectedRoute user={user}>
+                    <RecipeList />
+                  </ProtectedRoute>
+                } />
+                <Route path="oefeningen" element={
+                  <ProtectedRoute user={user}>
+                    <ExerciseList />
+                  </ProtectedRoute>
+                } />
+                <Route path="card/:id" element={
+                  <ProtectedRoute user={user}>
+                    <DailyCardDetail user={user!} />
+                  </ProtectedRoute>
+                } />
+                <Route path="*" element={
+                  <ProtectedRoute user={user}>
+                    <div className="p-20 text-center">Coming Soon</div>
+                  </ProtectedRoute>
+                } />
+              </Route>
             </Routes>
           </main>
           <Toast />
         </div>
-      </HashRouter>
+      </BrowserRouter>
     </ErrorBoundary>
   );
 };

@@ -5,126 +5,133 @@ import { MarketingChat } from '../../components/features/marketing';
 
 const MarketingHome: React.FC = () => {
   return (
-    <div className="relative overflow-hidden bg-stone-50">
+    <div className="relative overflow-hidden min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-teal-900">
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-6 lg:pt-40 lg:pb-32 bg-stone-100">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <section className="pt-24 pb-20 px-6 lg:pt-32 lg:pb-28">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left column */}
           <div>
-            <span className="inline-block px-4 py-1.5 bg-teal-100 text-teal-800 rounded-full text-sm font-semibold mb-6">Start jouw transformatie</span>
-            <h1 className="text-5xl lg:text-7xl font-bold text-stone-900 leading-[1.1] mb-8">
-              Herontdek je rust. <br />
-              <span className="text-teal-600">In 8 weken.</span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/5 text-white text-sm font-semibold mb-8">
+              <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+              Geen gedoe — gewoon starten
+            </span>
+            <h1 className="font-hero text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1] mb-6">
+              Herontdek je rust.{' '}
+              <span className="block">In 8 weken.</span>
             </h1>
-            <p className="text-xl text-stone-600 mb-10 max-w-lg leading-relaxed">
-              Een persoonlijke reis naar meer energie en minder stress. FLO8 combineert mindfulness, 
+            <p className="text-lg lg:text-xl text-stone-300 max-w-lg leading-relaxed mb-10">
+              Een persoonlijke reis naar meer energie en minder stress. FLO8 combineert mindfulness,
               voeding en coaching in één krachtige ervaring.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link to="/prijzen" className="bg-teal-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-teal-700 transition-all text-center shadow-lg shadow-teal-600/20">
-                Bekijk Pakketten
+            <div className="flex flex-col sm:flex-row gap-4 items-start">
+              <Link
+                to="/prijzen"
+                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-8 py-4 rounded-2xl text-lg font-bold hover:opacity-95 transition-all shadow-lg shadow-cyan-500/25"
+              >
+                Bekijk pakketten
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </Link>
-              <Link to="/contact" className="bg-white border border-stone-200 text-stone-800 px-8 py-4 rounded-xl text-lg font-bold hover:border-stone-400 transition-all text-center">
-                Gratis Adviesgesprek
+              <Link to="/app/login" className="text-stone-400 hover:text-white text-sm font-medium transition-colors">
+                Al een account?
               </Link>
-            </div>
-            
-            <div className="flex items-center gap-6 pt-8 border-t border-stone-200">
-              <div className="flex -space-x-2">
-                {[1,2,3,4].map(i => (
-                  <img key={i} className="w-10 h-10 rounded-full border-2 border-white" src={`https://i.pravatar.cc/100?u=${i}`} alt="user" />
-                ))}
-              </div>
-              <p className="text-sm text-stone-500 font-medium">Al <strong>150+ mensen</strong> gingen je voor deze maand.</p>
             </div>
           </div>
-          
+
+          {/* Right column – featured card */}
           <div className="relative">
-            <MarketingChat />
-            <div className="absolute -z-10 -top-20 -right-20 w-64 h-64 bg-teal-100 rounded-full blur-3xl opacity-50"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* App Capabilities Section */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6 italic">Jouw complete coach, in je broekzak.</h2>
-            <p className="text-xl text-stone-600 max-w-2xl mx-auto">Ontdek hoe FLO8 technologie combineert met menselijke expertise.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-            <div className="group">
-              <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">🎯</div>
-              <h3 className="text-2xl font-bold mb-4">Dagelijkse Focuskaarten</h3>
-              <p className="text-stone-600 leading-relaxed">Geen overweldigende lijsten, maar één simpele actie per dag die je helpt groeien op het gebied van slaap, voeding of beweging.</p>
-            </div>
-
-            <div className="group">
-              <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">🥗</div>
-              <h3 className="text-2xl font-bold mb-4">Voedingsplan op Maat</h3>
-              <p className="text-stone-600 leading-relaxed">Toegang tot een uitgebreide bibliotheek met snelle, gezonde recepten die echt lekker zijn en je energielevel stabiel houden.</p>
-            </div>
-
-            <div className="group">
-              <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">🧘</div>
-              <h3 className="text-2xl font-bold mb-4">Zachte Beweging</h3>
-              <p className="text-stone-600 leading-relaxed">Oefeningen voor elk niveau, inclusief speciale opties voor mensen met beperkte mobiliteit. Focus op herstel en kracht.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Coaching Focus Section */}
-      <section className="py-24 px-6 bg-stone-900 text-white">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <h2 className="text-4xl lg:text-5xl font-bold mb-8 italic">Menselijk contact maakt het verschil.</h2>
-            <p className="text-xl text-stone-400 mb-8 leading-relaxed">
-              Bij FLO8 geloven we niet alleen in apps, maar in echte connectie. Daarom bevat elk pakket persoonlijke 1-op-1 sessies met onze experts.
-            </p>
-            <ul className="space-y-6">
-              <li className="flex items-start gap-4">
-                <div className="w-6 h-6 bg-teal-500 rounded-full flex-shrink-0 flex items-center justify-center text-xs">✓</div>
-                <div>
-                  <h4 className="font-bold text-lg">1-op-1 Video Coaching</h4>
-                  <p className="text-stone-400">Boek direct een sessie van 30 of 60 minuten met jouw vaste coach.</p>
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 lg:p-8 shadow-2xl">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center text-2xl">
+                  🧘
                 </div>
-              </li>
-              <li className="flex items-start gap-4">
-                <div className="w-6 h-6 bg-teal-500 rounded-full flex-shrink-0 flex items-center justify-center text-xs">✓</div>
                 <div>
-                  <h4 className="font-bold text-lg">24/7 AI Lifestyle Expert</h4>
-                  <p className="text-stone-400">Exclusief in het 8-weken plan: een intelligente assistent die al je vragen direct beantwoordt, op elk moment.</p>
+                  <h2 className="font-hero text-xl lg:text-2xl font-bold text-white">Ontmoet je coach</h2>
+                  <p className="text-stone-400 text-sm">Persoonlijk & AI</p>
                 </div>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-stone-800 p-8 rounded-3xl border border-stone-700 shadow-2xl">
-            <div className="flex items-center gap-4 mb-8">
-              <img className="w-16 h-16 rounded-full border-2 border-teal-500" src="https://i.pravatar.cc/100?u=coach" alt="Coach" />
-              <div>
-                <p className="font-bold text-xl">Coach Sarah</p>
-                <p className="text-teal-400">Leefstijl & Mindfulness Expert</p>
               </div>
+              <p className="text-stone-400 text-sm lg:text-base mb-6 leading-relaxed">
+                Je vaste begeleider voor rust en energie. Persoonlijke sessies en een AI-assistent die
+                meedenkt over voeding, beweging en mindset.
+              </p>
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-stone-900/50">
+                <MarketingChat variant="dark" />
+              </div>
+              <Link
+                to="/contact"
+                className="mt-4 inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors"
+              >
+                Bekijk hoe het werkt
+                <span className="text-lg">▷</span>
+              </Link>
             </div>
-            <p className="italic text-stone-300 mb-8">
-              "In onze 1-op-1 sessies kijken we dieper naar jouw patronen. Waarom lukt het soms niet? Samen bouwen we een fundament dat wél blijft staan."
-            </p>
-            <Link to="/contact" className="block text-center bg-white text-stone-900 py-4 rounded-xl font-bold hover:bg-stone-200 transition-all">
-              Praat met een coach
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-6 text-center">
-        <h2 className="text-3xl lg:text-6xl font-bold mb-8">Klaar voor de eerste stap?</h2>
-        <p className="text-xl text-stone-600 mb-12 max-w-xl mx-auto">Word onderdeel van FLO8 en kies voor een leven met meer flow.</p>
-        <Link to="/prijzen" className="inline-block bg-teal-600 text-white px-12 py-5 rounded-2xl text-xl font-bold hover:bg-teal-700 transition-all shadow-xl shadow-teal-600/30">
-          Bekijk onze programma's
-        </Link>
+      {/* Stats */}
+      <section className="px-6 pb-24 lg:pb-32">
+        <div className="max-w-7xl mx-auto grid sm:grid-cols-3 gap-6">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 lg:p-8 text-center">
+            <p className="font-hero text-3xl lg:text-4xl font-bold text-white">150+</p>
+            <p className="text-stone-400 text-sm font-medium mt-1">DEELNEMERS DEZE MAAND</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 lg:p-8 text-center">
+            <p className="font-hero text-3xl lg:text-4xl font-bold text-white">8</p>
+            <p className="text-stone-400 text-sm font-medium mt-1">WEKEN PROGRAMMA</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 lg:p-8 text-center">
+            <p className="font-hero text-3xl lg:text-4xl font-bold text-white">24/7</p>
+            <p className="text-stone-400 text-sm font-medium mt-1">AI-COACH BESCHIKBAAR</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities – compact dark section */}
+      <section className="py-20 px-6 border-t border-white/10">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="font-hero text-2xl lg:text-4xl font-bold text-white text-center mb-4">
+            Jouw complete coach, in je broekzak
+          </h2>
+          <p className="text-stone-400 text-center max-w-2xl mx-auto mb-16">
+            Ontdek hoe FLO8 technologie combineert met menselijke expertise.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl mb-4">🎯</div>
+              <h3 className="text-lg font-bold text-white mb-2">Dagelijkse focuskaarten</h3>
+              <p className="text-stone-400 text-sm leading-relaxed">Eén duidelijke actie per dag voor slaap, voeding of beweging.</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl mb-4">🥗</div>
+              <h3 className="text-lg font-bold text-white mb-2">Voedingsplan op maat</h3>
+              <p className="text-stone-400 text-sm leading-relaxed">Recepten die lekker zijn en je energie stabiel houden.</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl mb-4">🧘</div>
+              <h3 className="text-lg font-bold text-white mb-2">Zachte beweging</h3>
+              <p className="text-stone-400 text-sm leading-relaxed">Oefeningen voor elk niveau, focus op herstel en kracht.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Coaching + CTA */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="font-hero text-3xl lg:text-5xl font-bold text-white mb-6">
+            Klaar voor de eerste stap?
+          </h2>
+          <p className="text-stone-400 text-lg mb-10 max-w-xl mx-auto">
+            Word onderdeel van FLO8 en kies voor een leven met meer flow.
+          </p>
+          <Link
+            to="/prijzen"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white px-10 py-4 rounded-2xl text-lg font-bold hover:opacity-95 transition-all shadow-lg shadow-purple-500/25"
+          >
+            Bekijk onze programma&apos;s
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </Link>
+        </div>
       </section>
     </div>
   );
